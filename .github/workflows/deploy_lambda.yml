@@ -1,0 +1,18 @@
+name: "Deploy lambda function to AWS Lambda"
+
+on:
+    pull_request:
+        branches: ["development"]
+        types: 
+            - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+      
+    - name: Imprimir Hello World
+      run: echo "Hello, World!"
