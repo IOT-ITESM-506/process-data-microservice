@@ -1,9 +1,14 @@
-
 import json
 import boto3
 
 def lambda_handler(event, context):
-    """Sample Lambda function to PUT an item to DynamoDB."""
+    """
+        Handler function for the Lambda function
+        :param event: The event data passed to the Lambda function
+        :param context: The context data passed to the Lambda function
+
+        :return: A response object containing the status code and body
+    """
 
     response = {
         "statusCode": 200,
