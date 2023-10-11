@@ -34,7 +34,7 @@ jobs:
 
         - name: Deploy to AWS Lambda
           run: |
-              aws lambda update-function-code --function-name ${{secrets.LAMBDA_FUNCTION}} --zip-file fileb://lambda_function.zip
+              aws lambda update-function-code --function-name ${{secrets.AWS_LAMBDA_FUNCTION}} --zip-file fileb://lambda_function.zip
               aws lambda update-function-configuration \
               --function-name name_of_your_lambda_function \
               --environment 'Variables={
