@@ -1,5 +1,5 @@
-import json
-import boto3
+from db.postgres_connection import PostgresDatabase
+from db.postgres_config import db_config
 
 def lambda_handler(event, context):
     """
@@ -9,10 +9,11 @@ def lambda_handler(event, context):
 
         :return: A response object containing the status code and body
     """
+    with PostgresDatabase(config=db_config) as connection:
+        cursor = connection.cursor()
+        
 
-    response = {
-        "statusCode": 200,
-        "body": json.dumps({"message": "¡Hola desde AWS Lambda!"})
-    }
+        cursor.execute("SELECT * FROM USERS;")
+        version = cursor.fetchone()
+        print(f"PostgreSQL version: {version}")
     
-    return response
