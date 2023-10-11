@@ -26,6 +26,11 @@ jobs:
               aws configure set region ${{ secrets.AWS_REGION }}
           shell: bash
 
+        - name: Install Lambda function dependencies
+          run: |
+              pip install -r requirements.txt -t app/
+          shell: bash
+
         - name: Compress Lambda function
           run: |
               cd app
@@ -36,7 +41,7 @@ jobs:
           run: |
               aws lambda update-function-code --function-name ${{secrets.AWS_LAMBDA_FUNCTION}} --zip-file fileb://lambda_function.zip
               aws lambda update-function-configuration \
-              --function-name name_of_your_lambda_function \
+              --function-name ${{secrets.AWS_LAMBDA_FUNCTION}} \
               --environment 'Variables={
                   DB_NAME=${{ secrets.DB_NAME }},
                   DB_USER=${{ secrets.DB_USER }},
