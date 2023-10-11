@@ -1,3 +1,4 @@
+"""SQS event processor"""
 import boto3
 import json
 
@@ -5,15 +6,15 @@ class SQSEventProcessor:
     def __init__(self):
         self.sqs = boto3.client('sqs')
 
-    def lambda_handler(self, event, context):
-        """Función que AWS Lambda ejecutaría en respuesta a un nuevo mensaje"""
+    def listener(self, event):
+        """AWS Lambda function handler"""
         
         for record in event['Records']:
             body = json.loads(record['body'])
             self.process_message(body)
 
     def process_message(self, message):
-        """Lógica personalizada para procesar el mensaje"""
+        """Process a message from the SQS queue"""
 
         return {
             'statusCode': 200,

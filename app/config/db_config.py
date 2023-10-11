@@ -1,3 +1,4 @@
+"""Database configuration module."""
 from dataclasses import dataclass
 
 @dataclass
