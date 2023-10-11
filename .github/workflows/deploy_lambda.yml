@@ -1,18 +1,48 @@
-name: "Deploy lambda function to AWS Lambda"
+name: Deploy AWS Lambda
 
 on:
-    pull_request:
-        branches: ["development"]
-        types: 
-            - closed
+    push:
+        branches:
+            - development
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout código
-      uses: actions/checkout@v2
-      
-    - name: Imprimir Hello World
-      run: echo "Hello, World!"
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Install AWS CLI
+          run: |
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              sudo ./aws/install
+          shell: bash
+
+        - name: Configure AWS CLI
+          run: |
+              aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+              aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+              aws configure set region ${{ secrets.AWS_REGION }}
+          shell: bash
+
+        - name: Compress Lambda function
+          run: |
+              cd app
+              zip -r ../lambda_function.zip .
+          shell: bash
+
+        - name: Deploy to AWS Lambda
+          run: |
+              aws lambda update-function-code --function-name ${{secrets.LAMBDA_FUNCTION}} --zip-file fileb://lambda_function.zip
+              aws lambda update-function-configuration \
+              --function-name name_of_your_lambda_function \
+              --environment 'Variables={
+                  DB_NAME=${{ secrets.DB_NAME }},
+                  DB_USER=${{ secrets.DB_USER }},
+                  DB_PASSWORD=${{ secrets.DB_PASSWORD }},
+                  DB_HOST=${{ secrets.DB_HOST }},
+                  DB_PORT=${{ secrets.DB_PORT }}
+              }'
+          shell: bash
