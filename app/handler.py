@@ -9,7 +9,7 @@ def lambda_handler(event, context):
 
         :return: A response object containing the status code and body
     """
-    print('Event: ', event)
+    print('SQS Event: ', event)
     return {
         'statusCode': 200,
         'body': json.dumps('Mensaje procesado'),
