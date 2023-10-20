@@ -8,7 +8,6 @@ class SQSEventProcessor:
 
     def listener(self, event):
         """AWS Lambda function handler"""
-        
         for record in event['Records']:
             body = json.loads(record['body'])
             self.process_message(body)

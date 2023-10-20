@@ -1,5 +1,8 @@
 """Script to process the SQS event and insert the data into the database"""
 import json
+from services.sqs_event_processor import SQSEventProcessor
+
+sqs_processor = SQSEventProcessor()
 
 def handler(event, context):
     """
@@ -9,8 +12,16 @@ def handler(event, context):
 
         :return: A response object containing the status code and body
     """
-    print('SQS Event: ', event)
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Mensaje procesado'),
-    }
+    try:
+        data = sqs_processor.listener(event)
+        print('Mensaje procesado', data)
+        return {
+            'statusCode': 200,
+            'body': json.dumps('Mensaje procesado')
+        }
+    except Exception as e:
+        print(e)
+        return {
+            'statusCode': 500,
+            'body': json.dumps('Error al procesar el mensaje')
+        }
