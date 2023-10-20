@@ -1,7 +1,6 @@
 """Script to process the SQS event and insert the data into the database"""
 import json
 
-
 def lambda_handler(event, context):
     """
         Handler function for the Lambda function
