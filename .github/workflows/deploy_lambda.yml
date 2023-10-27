@@ -28,7 +28,7 @@ jobs:
 
         - name: Install Lambda function dependencies
           run: |
-              pip install -r requirements.txt -t app/
+              pip install -r requirements.txt --target ./app
           shell: bash
 
         - name: Compress Lambda function
