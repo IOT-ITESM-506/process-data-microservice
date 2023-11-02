@@ -4,7 +4,7 @@ import json
 # from db.postgres_connection import PostgresDatabase
 import psycopg2
 
-def handler(event, context):
+def lambda_handler(event, context):
     """
         Handler function for the Lambda function
         :param event: The event data passed to the Lambda function
@@ -12,7 +12,8 @@ def handler(event, context):
 
         :return: A response object containing the status code and body
     """
-    print("Psycopg2 Version:", psycopg2.__version__)
+    print('Event: ', event)
+    # print("JESUS RAUL Psycopg2 Version:", psycopg2.__version__)
     # with PostgresDatabase(db_config) as connection:
     #     cursor = connection.cursor()
     #     data = cursor.execute("SELECT * FROM core_user;")
@@ -20,6 +21,6 @@ def handler(event, context):
     
     return {
         'statusCode': 200,
-        'body': json.dumps('Mensaje procesado')
+        'body': json.dumps('AWS Lambda function executed successfully!')
     }
     
