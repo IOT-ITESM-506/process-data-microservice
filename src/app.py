@@ -1,6 +1,7 @@
 """Script to process the SQS event and insert the data into the database"""
 import json
 from services.sqs_event_processor import SQSEventProcessor
+import psycopg2
 
 def handler(event, context):
     """
@@ -19,4 +20,3 @@ def handler(event, context):
         'statusCode': 200,
         'body': json.dumps('AWS Lambda function executed successfully!')
     }
-    
