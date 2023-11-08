@@ -3,7 +3,7 @@ import json
 from services.sqs_event_processor import SQSEventProcessor
 from db.postgres_config import db_config
 from db.postgres_connection import PostgresDatabase
-
+from queries.insert_record_data import insert_record_data
 
 def handler(event, context):
     """
@@ -17,11 +17,11 @@ def handler(event, context):
 
     with PostgresDatabase(db_config) as connection:
         cursor = connection.cursor()
-        data = cursor.execute("SELECT * FROM core_user;")
-
         processed_data = sqs_event_processor.process_message()
-        print('Data from database: ', data)
-        print('Processed data: ', processed_data)
+        if processed_data:
+            query, values = insert_record_data(processed_data)
+            cursor.execute(query, values)
+            connection.commit()
        
     return {
         'statusCode': 200,
