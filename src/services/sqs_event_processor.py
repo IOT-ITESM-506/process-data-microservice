@@ -1,4 +1,5 @@
 import json
+import uuid
 
 class SQSEventProcessor:
     def __init__(self, event):
@@ -6,13 +7,10 @@ class SQSEventProcessor:
 
     def process_message(self):
         processed_data = {
+            'id': None,
             'temperature': None,
             'humidity': None,
             'luminosity': None,
-            'co2_level': None,
-            'soil_moisture': None,
-            'ph': None,
-            'nutrient_level': None,
             'timestamp': None,
             'sensor_record_circuit_id': None,
         }
@@ -28,13 +26,10 @@ class SQSEventProcessor:
                     sns_message = json.loads(message_body)                    
                     message_data = json.loads(sns_message.get('Message', '{}'))
                     processed_data.update({
+                        'id': str(uuid.uuid4()),
                         'temperature': message_data.get('temperature', None),
                         'humidity': message_data.get('humidity', None),
                         'luminosity': message_data.get('luminosity', None),
-                        'co2_level': message_data.get('co2_level', None),
-                        'soil_moisture': message_data.get('soil_moisture', None),
-                        'ph': message_data.get('ph', None),
-                        'nutrient_level': message_data.get('nutrient_level', None),
                         'timestamp': message_data.get('timestamp', None),
                         'sensor_record_circuit_id': message_data.get('sensor_record_circuit_id', None),
                     })

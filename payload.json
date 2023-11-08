@@ -2,10 +2,6 @@
     "temperature": 25.5,
     "humidity": 60.2,
     "luminosity": 800,
-    "co2_level": 400,
-    "soil_moisture": 45.8,
-    "ph": 6.5,
-    "nutrient_level": 120,
     "timestamp": "2023-11-02T14:42:59.159Z",
     "sensor_record_circuit_id": "550e8400-e29b-41d4-a716-446655440000"
 }

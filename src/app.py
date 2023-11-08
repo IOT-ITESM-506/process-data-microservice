@@ -18,10 +18,8 @@ def handler(event, context):
     with PostgresDatabase(db_config) as connection:
         cursor = connection.cursor()
         processed_data = sqs_event_processor.process_message()
-        if processed_data:
-            query, values = insert_record_data(processed_data)
-            cursor.execute(query, values)
-            connection.commit()
+
+        print('Processed data: ', processed_data)
        
     return {
         'statusCode': 200,
