@@ -2,9 +2,9 @@ from config.db_config import DatabaseConfig
 import os
 
 db_config = DatabaseConfig(
-    database = os.environ['DB_NAME'],
-    user = os.environ['DB_USER'],
-    password = os.environ['DB_PASSWORD'],
-    host = os.environ['DB_HOST'],
-    port = os.environ['DB_PORT']
+    database = 'postgres',
+    user = 'edu',
+    password = 'T3rraPass2023',
+    host = 'iot.ccsdodpf4r0e.us-east-1.rds.amazonaws.com',
+    port = '5432'
 )

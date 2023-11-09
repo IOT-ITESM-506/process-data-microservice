@@ -5,6 +5,8 @@ from db.postgres_config import db_config
 from db.postgres_connection import PostgresDatabase
 from queries.insert_record_data import insert_record_data
 
+import uuid
+
 def handler(event, context):
     """
         Handler function for the Lambda function
@@ -15,13 +17,23 @@ def handler(event, context):
     """
     sqs_event_processor = SQSEventProcessor(event)
 
-    with PostgresDatabase(db_config) as connection:
-        cursor = connection.cursor()
-        processed_data = sqs_event_processor.process_message()
+    try:
+        with PostgresDatabase(db_config) as connection:
+            cursor = connection.cursor()
+            processed_data = sqs_event_processor.process_message()
+            processed_data['id'] = str(uuid.uuid4())
 
-        print('Processed data: ', processed_data)
-       
-    return {
-        'statusCode': 200,
-        'body': json.dumps('AWS Lambda SQS event processed successfully!')
-    }
+            print('SQS event processed successfully: ', processed_data)
+
+            insert_record_data_query = insert_record_data(processed_data)
+            print('Insert query: ', insert_record_data_query)
+
+
+            return {
+                'statusCode': 200,
+                'body': json.dumps({'message': 'Record inserted successfully'})
+            }
+
+    except Exception as e:
+        print('Error: ', e)
+        raise e
