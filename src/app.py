@@ -24,6 +24,9 @@ def handler(event, context):
             processed_data['id'] = str(uuid.uuid4())
 
             insert_record_data_query = insert_record_data(processed_data)
+
+            print('Inserting record data: ', insert_record_data_query)
+
             cursor.execute(insert_record_data_query)
             connection.commit()
 
