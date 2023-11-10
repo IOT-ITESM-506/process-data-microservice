@@ -31,7 +31,7 @@ class SQSEventProcessor:
                         'humidity': message_data.get('humidity', None),
                         'luminosity': message_data.get('luminosity', None),
                         'timestamp': message_data.get('timestamp', None),
-                        'greenhouse_id': message_data.get('sensor_record_circuit_id', None),
+                        'greenhouse_id': message_data.get('greenhouse_id', None),
                     })
                 except json.JSONDecodeError as e:
                     print(f"Error decoding JSON: {e}")
