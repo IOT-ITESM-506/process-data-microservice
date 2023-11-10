@@ -1,3 +1,1 @@
-psycopg2-binary
-psycopg2
 aws-psycopg2

@@ -23,8 +23,6 @@ def handler(event, context):
             processed_data = sqs_event_processor.process_message()
             processed_data['id'] = str(uuid.uuid4())
 
-            print('SQS event processed successfully: ', processed_data)
-
             insert_record_data_query = insert_record_data(processed_data)
             cursor.execute(insert_record_data_query)
             connection.commit()
