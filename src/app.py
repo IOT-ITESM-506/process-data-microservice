@@ -26,7 +26,8 @@ def handler(event, context):
             print('SQS event processed successfully: ', processed_data)
 
             insert_record_data_query = insert_record_data(processed_data)
-            print('Insert query: ', insert_record_data_query)
+            cursor.execute(insert_record_data_query)
+            connection.commit()
 
 
             return {
