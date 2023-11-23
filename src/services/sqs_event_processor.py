@@ -8,7 +8,6 @@ class SQSEventProcessor:
     def process_message(self):
         processed_data = {
             'id': None,
-            'temperature': None,
             'humidity': None,
             'luminosity': None,
             'timestamp': None,
@@ -27,7 +26,6 @@ class SQSEventProcessor:
                     message_data = json.loads(sns_message.get('Message', '{}'))
                     processed_data.update({
                         'id': str(uuid.uuid4()),
-                        'temperature': message_data.get('temperature', None),
                         'humidity': message_data.get('humidity', None),
                         'luminosity': message_data.get('luminosity', None),
                         'timestamp': message_data.get('timestamp', None),
